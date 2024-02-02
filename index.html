@@ -1,11 +1,444 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Goguryeo Fleet Bataan</title>
-</head>
-<body>
-    NavyField Goguryeo Fleet information Test ver.1
-</body>
-</html>
+$.fn.AdminSettings = function(i) {
+    var a = this.attr("id")
+      , r = {
+        Theme: !0,
+        Layout: "vertical",
+        LogoBg: "skin6",
+        NavbarBg: "skin6",
+        SidebarType: "full",
+        SidebarColor: "skin1",
+        StylishSidebarColor: "skin6",
+        SidebarPosition: !1,
+        HeaderPosition: !1,
+        BoxedLayout: !1
+    }
+      , i = $.extend({}, r, i)
+      , n = {
+        AdminSettingsInit: function() {
+            n.ManageTheme(),
+            n.ManageThemeLayout(),
+            n.ManageThemeBackground(),
+            n.ManageSidebarType(),
+            n.ManageSidebarColor(),
+            n.ManageSidebarPosition(),
+            n.ManageBoxedLayout(),
+            n.ManageStylishSidebar()
+        },
+        ManageTheme: function() {
+            var e = i.Theme;
+            switch (i.Layout) {
+            case "vertical":
+                e == !0 ? ($("body").attr("data-theme", "dark"),
+                $("#theme-view").prop("checked", !0)) : ($("#" + a).attr("data-theme", "light"),
+                $("body").prop("checked", !1));
+                break
+            }
+        },
+        ManageThemeLayout: function() {
+            switch (i.Layout) {
+            case "horizontal":
+                $("#" + a).attr("data-layout", "horizontal");
+                var e = function() {
+                    var s = window.innerWidth > 0 ? window.innerWidth : this.screen.width;
+                    s < 991 ? $(".scroll-sidebar").perfectScrollbar({}) : $(".scroll-sidebar").perfectScrollbar("destroy")
+                };
+                $(window).ready(e),
+                $(window).on("resize", e);
+                break;
+            case "vertical":
+                $("#" + a).attr("data-layout", "vertical"),
+                $(".scroll-sidebar").perfectScrollbar({});
+                break
+            }
+        },
+        ManageThemeBackground: function() {
+            function e() {
+                var o = i.LogoBg;
+                o != null && o != "" ? $("#" + a + " .topbar .top-navbar .navbar-header").attr("data-logobg", o) : $("#" + a + " .topbar .top-navbar .navbar-header").attr("data-logobg", "skin1")
+            }
+            e();
+            function s() {
+                var o = i.NavbarBg;
+                o != null && o != "" ? ($("#" + a + " .topbar .navbar-collapse").attr("data-navbarbg", o),
+                $("#" + a + " .topbar").attr("data-navbarbg", o),
+                $("#" + a).attr("data-navbarbg", o)) : ($("#" + a + " .topbar .navbar-collapse").attr("data-navbarbg", "skin1"),
+                $("#" + a + " .topbar").attr("data-navbarbg", "skin1"),
+                $("#" + a).attr("data-navbarbg", "skin1"))
+            }
+            s()
+        },
+        ManageSidebarType: function() {
+            switch (i.SidebarType) {
+            case "full":
+                $("#" + a).attr("data-sidebartype", "full");
+                var e = function() {
+                    var s = window.innerWidth > 0 ? window.innerWidth : this.screen.width;
+                    s < 1170 ? ($("#main-wrapper").attr("data-sidebartype", "mini-sidebar"),
+                    $("#main-wrapper").addClass("mini-sidebar")) : ($("#main-wrapper").attr("data-sidebartype", "full"),
+                    $("#main-wrapper").removeClass("mini-sidebar"))
+                };
+                $(window).ready(e),
+                $(window).on("resize", e),
+                $(".sidebartoggler").on("click", function() {
+                    $("#main-wrapper").toggleClass("mini-sidebar"),
+                    $("#main-wrapper").hasClass("mini-sidebar") ? ($(".sidebartoggler").prop("checked", !0),
+                    $("#main-wrapper").attr("data-sidebartype", "mini-sidebar")) : ($(".sidebartoggler").prop("checked", !1),
+                    $("#main-wrapper").attr("data-sidebartype", "full"))
+                });
+                break;
+            case "mini-sidebar":
+                $("#" + a).attr("data-sidebartype", "mini-sidebar"),
+                $(".sidebartoggler").on("click", function() {
+                    $("#main-wrapper").toggleClass("mini-sidebar"),
+                    $("#main-wrapper").hasClass("mini-sidebar") ? ($(".sidebartoggler").prop("checked", !0),
+                    $("#main-wrapper").attr("data-sidebartype", "full")) : ($(".sidebartoggler").prop("checked", !1),
+                    $("#main-wrapper").attr("data-sidebartype", "mini-sidebar"))
+                });
+                break;
+            case "iconbar":
+                $("#" + a).attr("data-sidebartype", "iconbar");
+                var e = function() {
+                    var s = window.innerWidth > 0 ? window.innerWidth : this.screen.width;
+                    s < 1170 ? ($("#main-wrapper").attr("data-sidebartype", "mini-sidebar"),
+                    $("#main-wrapper").addClass("mini-sidebar")) : ($("#main-wrapper").attr("data-sidebartype", "iconbar"),
+                    $("#main-wrapper").removeClass("mini-sidebar"))
+                };
+                $(window).ready(e),
+                $(window).on("resize", e),
+                $(".sidebartoggler").on("click", function() {
+                    $("#main-wrapper").toggleClass("mini-sidebar"),
+                    $("#main-wrapper").hasClass("mini-sidebar") ? ($(".sidebartoggler").prop("checked", !0),
+                    $("#main-wrapper").attr("data-sidebartype", "mini-sidebar")) : ($(".sidebartoggler").prop("checked", !1),
+                    $("#main-wrapper").attr("data-sidebartype", "iconbar"))
+                });
+                break;
+            case "overlay":
+                $("#" + a).attr("data-sidebartype", "overlay");
+                var e = function() {
+                    var s = window.innerWidth > 0 ? window.innerWidth : this.screen.width;
+                    s < 767 ? ($("#main-wrapper").attr("data-sidebartype", "mini-sidebar"),
+                    $("#main-wrapper").addClass("mini-sidebar")) : ($("#main-wrapper").attr("data-sidebartype", "overlay"),
+                    $("#main-wrapper").removeClass("mini-sidebar"))
+                };
+                $(window).ready(e),
+                $(window).on("resize", e),
+                $(".sidebartoggler").on("click", function() {
+                    $("#main-wrapper").toggleClass("show-sidebar"),
+                    $("#main-wrapper").hasClass("show-sidebar")
+                });
+                break;
+            case "stylish-menu":
+                $("#" + a).attr("data-sidebartype", "stylish-menu");
+                var e = function() {
+                    var s = window.innerWidth > 0 ? window.innerWidth : this.screen.width;
+                    s < 1170 ? ($("#main-wrapper").attr("data-sidebartype", "stylish-menu"),
+                    $("#main-wrapper").addClass("mini-sidebar")) : ($("#main-wrapper").attr("data-sidebartype", "stylish-menu"),
+                    $("#main-wrapper").removeClass("mini-sidebar"))
+                };
+                $(window).ready(e),
+                $(window).on("resize", e);
+                break
+            }
+        },
+        ManageSidebarColor: function() {
+            function e() {
+                var s = i.SidebarColor;
+                s != null && s != "" ? $("#" + a + " .left-sidebar").attr("data-sidebarbg", s) : $("#" + a + " .left-sidebar").attr("data-sidebarbg", "skin1")
+            }
+            e()
+        },
+        ManageStylishSidebar: function() {
+            function e() {
+                var s = i.StylishSidebarColor;
+                s != null && s != "" ? $("#" + a + " .side-mini-panel").attr("data-stylishsidebarbg", s) : $("#" + a + " .side-mini-panel").attr("data-stylishsidebarbg", "skin1")
+            }
+            e()
+        },
+        ManageSidebarPosition: function() {
+            var e = i.SidebarPosition
+              , s = i.HeaderPosition;
+            switch (i.Layout) {
+            case "vertical":
+                e == !0 ? ($("#" + a).attr("data-sidebar-position", "fixed"),
+                $("#sidebar-position").prop("checked", !0)) : ($("#" + a).attr("data-sidebar-position", "absolute"),
+                $("#sidebar-position").prop("checked", !1)),
+                s == !0 ? ($("#" + a).attr("data-header-position", "fixed"),
+                $("#header-position").prop("checked", !0)) : ($("#" + a).attr("data-header-position", "relative"),
+                $("#header-position").prop("checked", !1));
+                break;
+            case "horizontal":
+                e == !0 ? ($("#" + a).attr("data-sidebar-position", "fixed"),
+                $("#sidebar-position").prop("checked", !0)) : ($("#" + a).attr("data-sidebar-position", "absolute"),
+                $("#sidebar-position").prop("checked", !1)),
+                s == !0 ? ($("#" + a).attr("data-header-position", "fixed"),
+                $("#header-position").prop("checked", !0)) : ($("#" + a).attr("data-header-position", "relative"),
+                $("#header-position").prop("checked", !1));
+                break
+            }
+        },
+        ManageBoxedLayout: function() {
+            var e = i.BoxedLayout;
+            switch (i.Layout) {
+            case "vertical":
+                e == !0 ? ($("#" + a).attr("data-boxed-layout", "boxed"),
+                $("#boxed-layout").prop("checked", !0)) : ($("#" + a).attr("data-boxed-layout", "full"),
+                $("#boxed-layout").prop("checked", !1));
+                break;
+            case "horizontal":
+                e == !0 ? ($("#" + a).attr("data-boxed-layout", "boxed"),
+                $("#boxed-layout").prop("checked", !0)) : ($("#" + a).attr("data-boxed-layout", "full"),
+                $("#boxed-layout").prop("checked", !1));
+                break
+            }
+        }
+    };
+    n.AdminSettingsInit()
+}
+;
+$(function() {
+    $("#chat"),
+    $("#chat .message-center a").on("click", function() {
+        var t = $(this).find(".mail-contnet h5").text()
+          , a = $(this).find(".user-img img").attr("src")
+          , r = $(this).attr("data-user-id")
+          , i = $(this).find(".profile-status").attr("data-status");
+        if ($(this).hasClass("active"))
+            $(this).toggleClass("active"),
+            $(".chat-windows #user-chat" + r).hide();
+        else if ($(this).toggleClass("active"),
+        $(".chat-windows #user-chat" + r).length)
+            $(".chat-windows #user-chat" + r).removeClass("mini-chat").show();
+        else {
+            var n = c("I watched the storm, so beautiful yet terrific.");
+            n += l("That is very deep indeed!");
+            var e = "<div class='user-chat' id='user-chat" + r + "' data-user-id='" + r + "'>";
+            e += "<div class='chat-head'><img src='" + a + "' data-user-id='" + r + "'><span class='status " + i + "'></span><span class='name'>" + t + "</span><span class='opts'><i class='ti-close closeit' data-user-id='" + r + "'></i><i class='ti-minus mini-chat' data-user-id='" + r + "'></i></span></div>",
+            e += "<div class='chat-body'><ul class='chat-list'>" + n + "</ul></div>",
+            e += "<div class='chat-footer'><input type='text' data-user-id='" + r + "' placeholder='Type & Enter' class='form-control'></div>",
+            e += "</div>",
+            $(".chat-windows").append(e)
+        }
+    }),
+    $(document).on("click", ".chat-windows .user-chat .chat-head .closeit", function(t) {
+        var a = $(this).attr("data-user-id");
+        $(".chat-windows #user-chat" + a).hide(),
+        $("#chat .message-center .user-info#chat_user_" + a).removeClass("active")
+    }),
+    $(document).on("click", ".chat-windows .user-chat .chat-head img, .chat-windows .user-chat .chat-head .mini-chat", function(t) {
+        var a = $(this).attr("data-user-id");
+        $(".chat-windows #user-chat" + a).hasClass("mini-chat") ? $(".chat-windows #user-chat" + a).removeClass("mini-chat") : $(".chat-windows #user-chat" + a).addClass("mini-chat")
+    }),
+    $(document).on("keypress", ".chat-windows .user-chat .chat-footer input", function(t) {
+        if (t.keyCode == 13) {
+            var a = $(this).attr("data-user-id")
+              , r = $(this).val();
+            r = l(r),
+            $(".chat-windows #user-chat" + a + " .chat-body .chat-list").append(r),
+            $(this).val(""),
+            $(this).focus()
+        }
+        $(".chat-windows #user-chat" + a + " .chat-body").perfectScrollbar({
+            suppressScrollX: !0
+        })
+    }),
+    $(".page-wrapper").on("click", function(t) {
+        $(".chat-windows").addClass("hide-chat"),
+        $(".chat-windows").removeClass("show-chat")
+    }),
+    $(".service-panel-toggle").on("click", function(t) {
+        $(".chat-windows").addClass("show-chat"),
+        $(".chat-windows").removeClass("hide-chat")
+    })
+});
+function c(t) {
+    var a = new Date
+      , r = a.getHours()
+      , i = a.getMinutes();
+    return "<li class='msg_receive'><div class='chat-content'><div class='box bg-light-info'>" + t + "</div></div><div class='chat-time'>" + r + ":" + i + "</div></li>"
+}
+function l(t) {
+    var a = new Date
+      , r = a.getHours()
+      , i = a.getMinutes();
+    return "<li class='odd msg_sent'><div class='chat-content'><div class='box bg-light-info'>" + t + "</div><br></div><div class='chat-time'>" + r + ":" + i + "</div></li>"
+}
+$(function() {
+    $("#main-wrapper").AdminSettings({
+        Theme: !1,
+        Layout: "vertical",
+        LogoBg: "skin6",
+        NavbarBg: "skin6",
+        SidebarType: "full",
+        SidebarColor: "skin6",
+        SidebarPosition: !0,
+        HeaderPosition: !0,
+        BoxedLayout: !1
+    })
+});
+$(function() {
+    function t() {
+        $(".theme-color .theme-item .theme-link").on("click", function() {
+            var d = $(this).attr("data-logobg");
+            $(".topbar .top-navbar .navbar-header").attr("data-logobg", d)
+        })
+    }
+    t();
+    function a() {
+        $("#main-wrapper").attr("data-navbarbg") == "skin6" && ($(".topbar .navbar").addClass("navbar-light"),
+        $(".topbar .navbar").removeClass("navbar-dark")),
+        $(".theme-color .theme-item .theme-link").on("click", function() {
+            var d = $(this).attr("data-navbarbg");
+            $("#main-wrapper").attr("data-navbarbg", d),
+            $(".topbar").attr("data-navbarbg", d),
+            $(".topbar .navbar-collapse").attr("data-navbarbg", d),
+            $("#main-wrapper").attr("data-navbarbg") == "skin6" ? ($(".topbar .navbar").addClass("navbar-light"),
+            $(".topbar .navbar").removeClass("navbar-dark")) : ($(".topbar .navbar").removeClass("navbar-light"),
+            $(".topbar .navbar").addClass("navbar-dark"))
+        })
+    }
+    a();
+    function r() {
+        $(".theme-color .theme-item .theme-link").on("click", function() {
+            var d = $(this).attr("data-sidebarbg");
+            $(".left-sidebar").attr("data-sidebarbg", d)
+        })
+    }
+    r();
+    function i() {
+        $(".theme-color .theme-item .theme-link").on("click", function() {
+            var d = $(this).attr("data-stylishsidebarbg");
+            $(".side-mini-panel").attr("data-stylishsidebarbg", d)
+        })
+    }
+    i();
+    function n() {
+        $("#sidebar-position").change(function() {
+            $(this).is(":checked") ? ($("#main-wrapper").attr("data-sidebar-position", "fixed"),
+            $(".topbar .top-navbar .navbar-header").attr("data-navheader", "fixed")) : ($("#main-wrapper").attr("data-sidebar-position", "absolute"),
+            $(".topbar .top-navbar .navbar-header").attr("data-navheader", "relative"))
+        })
+    }
+    n();
+    function e() {
+        $("#header-position").change(function() {
+            $(this).is(":checked") ? $("#main-wrapper").attr("data-header-position", "fixed") : $("#main-wrapper").attr("data-header-position", "relative")
+        })
+    }
+    e();
+    function s() {
+        $("#boxed-layout").change(function() {
+            $(this).is(":checked") ? $("#main-wrapper").attr("data-boxed-layout", "boxed") : $("#main-wrapper").attr("data-boxed-layout", "full")
+        })
+    }
+    s();
+    function o() {
+        $("#theme-view").change(function() {
+            $(this).is(":checked") ? $("body").attr("data-theme", "dark") : $("body").attr("data-theme", "light")
+        })
+    }
+    o()
+});
+$(function() {
+    var t = window.location + ""
+      , a = t.replace(window.location.protocol + "//" + window.location.host + "/", "")
+      , r = $("ul#sidebarnav a").filter(function() {
+        return this.href === t || this.href === a
+    });
+    r.parentsUntil(".sidebar-nav").each(function(i) {
+        $(this).is("li") && $(this).children("a").length !== 0 ? ($(this).children("a").addClass("active"),
+        $(this).parent("ul#sidebarnav").length === 0 ? $(this).addClass("active") : $(this).addClass("selected")) : !$(this).is("ul") && $(this).children("a").length === 0 ? $(this).addClass("selected") : $(this).is("ul") && $(this).addClass("in")
+    }),
+    r.addClass("active"),
+    $("#sidebarnav a").on("click", function(i) {
+        $(this).hasClass("active") ? $(this).hasClass("active") && ($(this).removeClass("active"),
+        $(this).parents("ul:first").removeClass("active"),
+        $(this).next("ul").removeClass("in")) : ($("ul", $(this).parents("ul:first")).removeClass("in"),
+        $("a", $(this).parents("ul:first")).removeClass("active"),
+        $(this).next("ul").addClass("in"),
+        $(this).addClass("active"))
+    }),
+    $("#sidebarnav >li >a.has-arrow").on("click", function(i) {
+        i.preventDefault()
+    }),
+    $(window).width() > 768 || window.Touch
+});
+$(function() {
+    feather.replace(),
+    $(".preloader").fadeOut(),
+    $(".left-sidebar").hover(function() {
+        $(".navbar-header").addClass("expand-logo")
+    }, function() {
+        $(".navbar-header").removeClass("expand-logo")
+    }),
+    $(".nav-toggler").on("click", function() {
+        $("#main-wrapper").toggleClass("show-sidebar"),
+        $(".nav-toggler i").toggleClass("ri-menu-2-line"),
+        $("body").trigger("resize")
+    }),
+    $(".nav-lock").on("click", function() {
+        $("body").toggleClass("lock-nav"),
+        $(".nav-lock i").toggleClass("mdi-toggle-switch-off"),
+        $("body, .page-wrapper").trigger("resize")
+    }),
+    $(".search-box a, .search-box .app-search .srh-btn").on("click", function() {
+        $(".app-search").toggle(200),
+        $(".app-search input").focus()
+    }),
+    $(function() {
+        $(".service-panel-toggle").on("click", function() {
+            $(".customizer").toggleClass("show-service-panel")
+        }),
+        $(".page-wrapper").on("click", function() {
+            $(".customizer").removeClass("show-service-panel")
+        })
+    }),
+    $(".floating-labels .form-control").on("focus blur", function(t) {
+        $(this).parents(".form-group").toggleClass("focused", t.type === "focus" || this.value.length > 0)
+    }).trigger("blur"),
+    $(function() {
+        for (var t = window.location, a = $("ul#sidebarnav a").filter(function() {
+            return this.href == t
+        }).addClass("active").parent().addClass("active"); a.is("li"); )
+            a = a.parent().addClass("in").parent().addClass("active")
+    }),
+    $(function() {
+        var t = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+        t.map(function(a) {
+            return new bootstrap.Tooltip(a)
+        })
+    }),
+    $(function() {
+        var t = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'));
+        t.map(function(a) {
+            return new bootstrap.Popover(a)
+        })
+    }),
+    $(".message-center, .customizer-body, .scrollable").perfectScrollbar({
+        wheelPropagation: !0
+    }),
+    $("body, .page-wrapper").trigger("resize"),
+    $(".page-wrapper").delay(20).show(),
+    $(".list-task li label").click(function() {
+        $(this).toggleClass("task-done")
+    }),
+    $('a[data-action="collapse"]').on("click", function(t) {
+        t.preventDefault(),
+        $(this).closest(".card").find('[data-action="collapse"] i').toggleClass("ri-subtract-line ri-add-line"),
+        $(this).closest(".card").children(".card-body").collapse("toggle")
+    }),
+    $('a[data-action="expand"]').on("click", function(t) {
+        t.preventDefault(),
+        $(this).closest(".card").find('[data-action="expand"] i').toggleClass("ri-fullscreen-line ri-fullscreen-exit-line"),
+        $(this).closest(".card").toggleClass("card-fullscreen")
+    }),
+    $('a[data-action="close"]').on("click", function() {
+        $(this).closest(".card").removeClass().slideUp("fast")
+    }),
+    $(".mega-dropdown").on("click", function(t) {
+        t.stopPropagation()
+    }),
+    $(".show-left-part").on("click", function() {
+        $(".left-part").toggleClass("show-panel"),
+        $(".show-left-part").toggleClass("ri-menu-fill")
+    })
+});
